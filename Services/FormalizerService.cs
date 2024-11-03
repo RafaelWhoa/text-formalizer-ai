@@ -16,7 +16,13 @@ public class FormalizerService : Formalizer.FormalizerBase
 
     public override async Task<FormalizerReply> FormalizeText(FormalizerRequest request, ServerCallContext context)
     {
-        ChatClient client = new(model: "gpt-4o-mini", apiKey: _configuration["Tokens:OpenAiToken"]);
+        var openAiToken = Environment.GetEnvironmentVariable("Tokens:OpenAiToken");
+        
+        if (string.IsNullOrEmpty(openAiToken))
+        {
+            openAiToken = _configuration["Tokens:OpenAiToken"];
+        }
+        ChatClient client = new(model: "gpt-4o-mini", apiKey: openAiToken);
         ChatCompletion completion =
             await client.CompleteChatAsync($"Transforme o seguinte texto em um texto bem formal: {request.Text}");
         
