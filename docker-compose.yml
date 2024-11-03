@@ -1,0 +1,10 @@
+﻿services:
+  formalizadorgrpc:
+    image: formalizadorgrpc
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5244:5244"
+    environment:
+      - ASPNETCORE_URLS=http://+:5000

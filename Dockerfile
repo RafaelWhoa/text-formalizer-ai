@@ -1,16 +1,15 @@
 ﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER $APP_UID
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+EXPOSE 5244
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["FormalizadorGrpc/FormalizadorGrpc.csproj", "FormalizadorGrpc/"]
-RUN dotnet restore "FormalizadorGrpc/FormalizadorGrpc.csproj"
+COPY ["FormalizadorGrpc.csproj", ""]
+RUN dotnet restore "FormalizadorGrpc.csproj"
 COPY . .
-WORKDIR "/src/FormalizadorGrpc"
+WORKDIR "/src"
 RUN dotnet build "FormalizadorGrpc.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
