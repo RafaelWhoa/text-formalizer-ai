@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option csharp_namespace = "FormalizadorGrpc";
+
+package formalizer;
+
+service Formalizer{
+  rpc FormalizeText (FormalizerRequest) returns (FormalizerReply);
+}
+
+message FormalizerRequest{
+  string text = 1;
+}
+
+message FormalizerReply{
+  string formalizedText = 1;
+}
